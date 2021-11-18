@@ -1,17 +1,10 @@
-package com.example.test;
+package com.example.oneM2MSimpleApplication;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONException;
@@ -26,15 +19,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-//该项目并未使用CSEHttpConnection.class和MonitorAE.class
-public class MainActivity extends AppCompatActivity {
-    //
-    TextView logout;
-    EditText cseUri;
-    Button Start, Stop;
-    Boolean isStopThread = false;
 
-    //
+public class MonitorMain extends AppCompatActivity {
+
+    EditText cseUri;
+    Button Start, Stop, temperature_value, humidity_value;
+    Boolean isStopThread = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,49 +32,48 @@ public class MainActivity extends AppCompatActivity {
         //Init control
         Start = findViewById(R.id.start);
         Stop = findViewById(R.id.stop);
-        logout = findViewById(R.id.logout);
+        temperature_value = findViewById(R.id.button_temperature);
+        humidity_value = findViewById(R.id.button_humidity);
         cseUri = findViewById(R.id.ipadress_text);
-        cseUri.setText("172.20.10.3");
+        //IP Address
+        cseUri.setText("10.187.208.55");
     }
-
+    //Button Start
     public void StartOnClick(View view) {
-        clearText(logout);
         try {
             startConnect();
             isStopThread = false;
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
+    //Button Stop
     public void StopOnClick(View view) {
         isStopThread = true;
+        System.out.println("HttpConnect stop");
     }
-
+    //HttpConnect
     private void startConnect() {
+        Map<Integer, String> hashMap = new HashMap();
+        hashMap.put(1, "temperature");
+        hashMap.put(2, "humidity");
+        Map<Integer, Button> buttonTextMap = new HashMap<>();
+        buttonTextMap.put(1, temperature_value);
+        buttonTextMap.put(2, humidity_value);
         new Thread() {
             @Override
             public void run() {
                 super.run();
                 int n = 1;
                 while (true) {
-                    Map<Integer, String> hashMap = new HashMap();
-                    hashMap.put(1, "temperature");
-                    hashMap.put(2, "humidity");
-                    hashMap.put(3, "turbidity");
-                    hashMap.put(4, "ph");
-                    //
                     URL url = null;
                     try {
-                        url = new URL("http://" + cseUri.getText() + ":8080/server/mydevice1/" + hashMap.get(n) + "/la");
-//                Tip("The connection is successful");
+                        url = new URL("http://" + cseUri.getText() + ":8080/server/" + hashMap.get(n) + "/data/la");
                     } catch (MalformedURLException e) {
-//                Tip("The connection fails");
                         e.printStackTrace();
+                        break;
                     }
                     try {
-                        assert url != null;
                         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                         conn.setRequestMethod("GET");
                         conn.setRequestProperty("Content-Type", "application/json");
@@ -95,30 +84,26 @@ public class MainActivity extends AppCompatActivity {
                         conn.connect();
                         Thread.sleep(1000);
                         String con = getResponseBodyCon(resolveInputStream(conn));
-                        addText(logout, hashMap.get(n) + ": " + con);
-                        System.out.println(con);
+                        loadButtonText(buttonTextMap.get(n), con);
+                        System.out.println(hashMap.get(n) + ":" + con);
                     } catch (IOException | JSONException | InterruptedException e) {
                         e.printStackTrace();
                     }
                     n++;
-                    if (n > 4) {
+                    if (n > 2) {
                         n = 1;
-                        addText(logout, "----------");
                     }
                     if (isStopThread) {
                         break;
                     }
                 }
-
             }
         }.start();
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
     }
 
     private String getResponseBodyCon(String body) throws JSONException {
@@ -127,20 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void addText(TextView textView, String content) {
-        textView.append(content);
-        textView.append("\n");
-        int offset = textView.getLineCount() * textView.getLineHeight();
-        if (offset > textView.getHeight()) {
-            textView.scrollTo(0, offset - textView.getHeight());
-        }
-    }
-
-    private void clearText(TextView mTextView) {
-        mTextView.setText("");
-    }
-
-    //resolve input stream
+    //Resolve Input Stream
     private String resolveInputStream(HttpURLConnection connection) throws IOException {
         InputStream in = connection.getInputStream();
         String responseBody;
@@ -155,7 +127,12 @@ public class MainActivity extends AppCompatActivity {
         return responseBody;
     }
 
-//    private void Tip(String text) {
-//        Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
-//    }
+    public void loadButtonText(Button button, String s) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                button.setText(s);
+            }
+        });
+    }
 }

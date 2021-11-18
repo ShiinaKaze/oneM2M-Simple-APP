@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">test</string>
+    <string name="app_name">oneM2M Simple APP</string>
     <string name="logout">Log Out</string>
     <string name="logo_image">Logo</string>
     <string name="logo">logo</string>
@@ -7,4 +7,25 @@
     <string name="start_listen_button">Start</string>
     <string name="stop_listen_button">Stop</string>
     <string name="versionText">version: 0.0.1 beta</string>
+    <string name="temperature_icon">temperature_icon</string>
+    <string name="humidity_icon">humidity_icon</string>
+    <string name="turbidity_icon">turbidity_icon</string>
+    <string name="pH_icon">pH_icon</string>
+    <string name="temperature_value">temperature_value</string>
+    <string name="humidity_value">humidity_value</string>
+    <string name="turbidity_value">turbidity_value</string>
+    <string name="pH_value">pH_value</string>
+    <string name="text_temperature">-Temperature-</string>
+    <string name="text_humidity">-Humidity-</string>
+    <string name="text_turbidity">Turbidity</string>
+    <string name="text_ph">-pH-</string>
+    <string name="button_list">Data List</string>
+    <string name="checkbox_login">remember password</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="button_login">Login</string>
+    <string name="con_value">0</string>
+    <string name="device_logo">Device Logo</string>
+    <string name="device_name">Device Name</string>
+    <string name="device_con">Device Con</string>
 </resources>

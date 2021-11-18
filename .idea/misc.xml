@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Shiina Kaze/Desktop/test/app/src/main/res/layout/activity_cseconnection.xml" value="0.19157608695652173" />
-        <entry key="..\:/Users/Shiina Kaze/Desktop/test/app/src/main/res/layout/activity_main.xml" value="0.6" />
+        <entry key="..\:/Users/Shiina Kaze/Desktop/test/app/src/main/res/layout/activity_main.xml" value="0.4" />
+        <entry key="..\:/Users/Shiina Kaze/Desktop/test/app/src/main/res/layout/activity_monitor_list.xml" value="0.2115036231884058" />
+        <entry key="..\:/Users/Shiina Kaze/Desktop/test/app/src/main/res/layout/activity_monitor_login.xml" value="0.2115036231884058" />
+        <entry key="..\:/Users/Shiina Kaze/Desktop/test/app/src/main/res/layout/recycler_item.xml" value="0.4" />
         <entry key="..\:/Users/Shiina Kaze/Desktop/test/app/src/main/res/xml/network_security_config.xml" value="0.1" />
       </map>
     </option>
@@ -18,7 +21,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.11626139817629179" />
+        <option name="scale" value="0.4" />
       </ProjectState>
     </option>
   </component>

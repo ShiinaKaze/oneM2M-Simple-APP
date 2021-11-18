@@ -1,4 +1,4 @@
-package com.example.test;
+package com.example.oneM2MSimpleApplication;
 
 import org.junit.Test;
 
